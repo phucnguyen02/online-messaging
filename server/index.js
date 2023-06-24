@@ -4,11 +4,32 @@ const http = require('http');
 const {Server} = require('socket.io');
 const db = require('./models');
 const {insertMessage, getLatest100Messages, editMessage, deleteMessage} = require('./controllers/messagesController');
+const routes = require('./routes/userRoutes')
 
 const CHAT_BOT = 'ChatBot';
 let users = [];
 const app = express();
 app.use(cors());
+app.use(express.json()); // Parse request bodies as JSON
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded request bodies
+app.use(routes);
+
+// Curb Cores Error by adding a header here
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    next();
+});
+
+  
+
 const server = http.createServer(app);
 const leaveRoom = require('./utils/leave-room');
 
@@ -40,6 +61,7 @@ io.on('connection', (socket) => {
             username: CHAT_BOT,
             __createdTime__
         })
+        
         users.push({id: socket.id, username});
         socket.to(room).emit('chatroom_users', users);
         socket.emit('chatroom_users', users);

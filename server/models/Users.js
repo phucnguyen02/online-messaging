@@ -1,17 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const Messages = sequelize.define("Messages", {
-        messageID: {
+    const Users = sequelize.define("Users", {
+        userID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement : true
         },
-        senderID:{
-            type: DataTypes.INTEGER
-        },
-        sender:{
+        username:{
             type: DataTypes.CHAR(255)
         },
-        content:{
+        password:{
             type: DataTypes.TEXT,
             allowNull: false,
             validate: {
@@ -21,5 +18,5 @@ module.exports = (sequelize, DataTypes) => {
 
     });
 
-    return Messages;
+    return Users;
 }

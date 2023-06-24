@@ -2,6 +2,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import './App.css';
 import Home from './pages/Home'
 import Chat from './pages/Chat'
+import Signup from './pages/Signup'
 import {useState} from 'react'
 import io from 'socket.io-client'
 
@@ -25,6 +26,8 @@ function App() {
             path = '/chat'
             element = {<Chat username = {username} socket = {socket}/>}
           />
+
+          <Route path = '/signup' element = {<Signup/>}/>
         </Routes>
       </div>
     </Router>
