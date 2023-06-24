@@ -28,7 +28,10 @@ app.use((req, res, next) => {
     next();
 });
 
-  
+app.get("/", (request, response, next) => {
+    response.json({ message: "Hey! This is your server response!" });
+    next();
+  });
 
 const server = http.createServer(app);
 const leaveRoom = require('./utils/leave-room');
