@@ -47,7 +47,8 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/getAllUsers', (req, res) => {
-    res.send(getAllUsers());
+    const users = getAllUsers();
+    res.send(users);
 })
 
 

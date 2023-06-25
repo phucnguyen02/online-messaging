@@ -50,7 +50,8 @@ async function verifyUserPassword(name, password){
 
 async function getAllUsers(){
     try{
-        return await Users.findAll();
+        const users = await Users.findAll();
+        return users;
     }
     catch(err){
         console.log(err)
