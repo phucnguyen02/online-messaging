@@ -46,7 +46,12 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/getAllUsers', (req, res) => {
-    getAllUsers().then((users) => res.send(users));
+    getAllUsers().then((users) => {
+        console.log(users);
+        res.status(201).send(users);
+    }).catch((e) => {
+        res.status(404).send({message: 'An error occurred while fetching all users', e})
+    });
 })
 
 
