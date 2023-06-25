@@ -121,6 +121,7 @@ io.on('connection', (socket) => {
     })
 })
 
-db.sequelize.sync().then((req) => {
+db.sequelize.sync({ alter: true, logging: false }).then((req) => {
     server.listen(4000, () => 'Server is running on port 4000')
 })
+
