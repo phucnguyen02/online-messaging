@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const {insertUser, deleteUser, findUsername, verifyUserPassword, getAllUsers} = require('../controllers/usersController')
 
 router.post('/register', (req, res) => {
-    console.log(req.body.password);
     bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
         insertUser(req.body.username, hashedPassword).then((result) => {
             res.status(201).send({message: 'User created successfully', result})
