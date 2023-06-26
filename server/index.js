@@ -121,10 +121,10 @@ io.on('connection', (socket) => {
     })
 })
 
-db.sequelize.sync({ alter: true, logging: true }).then((req) => {
-    server.listen(4000, () => 'Server is running on port 4000')
-}).catch((err) => {
-    console.log(err);
-})
+// db.sequelize.sync({ alter: true, logging: true }).then((req) => {
+//     server.listen(4000, () => 'Server is running on port 4000')
+// }).catch((err) => {
+//     console.log(err);
+// })
 
-//server.listen(4000, () => 'Server is running on port 4000');
+server.listen(4000, () => 'Server is running on port 4000');
