@@ -9,7 +9,6 @@ router.post('/register', (req, res) => {
         console.log('User from backend: ', user);
         if(user){
             res.status(500).json({ message: "Username is already registered." });
-            return;
         }
     }).catch((e) => {
         res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
