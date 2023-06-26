@@ -2,9 +2,18 @@ const express = require('express'); // Web framework for Node.js
 const router = express.Router(); // Creates an instance of an Express Router
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {insertUser, deleteUser, findUsername, verifyUserPassword, getAllUsers} = require('../controllers/usersController')
+const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controllers/usersController')
 
 router.post('/register', (req, res) => {
+    findUsername(req.body.username).then((user) => {
+        if(user){
+            res.status(500).json({ message: "Username is already registered." });
+            return;
+        }
+    }).catch((e) => {
+        res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
+    });
+
     bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
         insertUser(req.body.username, hashedPassword).then((result) => {
             res.status(201).send({message: 'User created successfully', result})

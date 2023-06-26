@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import axios from 'axios';
 
@@ -7,7 +6,6 @@ function Signup() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [register, setRegister] = useState(false);
-    const navigate = useNavigate();
 
     function handleUsernameChange({target}){
         setUsername(target.value);
@@ -27,12 +25,13 @@ function Signup() {
             }
         };
         axios(configuration).then((res) => {
-            setRegister(true);
+            if(res.status === 500)
+                alert('Username is already registered!');
+            else
+                setRegister(true);
         }).catch((err) => {
             err = new Error();
         });
-
-        //navigate('/', {replace: true})
     }
 
     return (

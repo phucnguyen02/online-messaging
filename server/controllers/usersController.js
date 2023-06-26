@@ -37,18 +37,6 @@ async function findUsername(name){
     }
 }
 
-async function verifyUserPassword(name, password){
-    try{
-        const user = await Users.find(
-            {where: {username: name}}
-        )
-        return user.dataValues.password === password;
-    }
-    catch(err){
-        console.log(err);
-    }
-}
-
 async function getAllUsers(){
     try{
         const users = await Users.findAll();
@@ -63,6 +51,5 @@ module.exports = {
     insertUser,
     deleteUser,
     findUsername,
-    verifyUserPassword,
     getAllUsers
 };

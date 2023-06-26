@@ -16,16 +16,25 @@ function Home({username, setUsername, socket}) {
         setPassword(target.value);
     }
 
-    function joinRoom(){
-        if(username !== ''){
-            socket.emit('join_room', {username});
-        }
-
-        navigate('/chat', {replace: true})
-    }
-
     function handleSignup(){
         navigate('/signup', {replace: true})
+    }
+
+    function handleLogin(){
+        const configuration = {
+            method: "post",
+            url: "https://phuc-chatroom-app.onrender.com/login",
+            data: {
+              username,
+              password,
+            }
+        };
+        axios(configuration).then((res) => {
+            socket.emit('join_room', {username});
+            navigate('/chat', {replace: true})
+        }).catch((err) => {
+            err = new Error();
+        });
     }
 
     return (
@@ -34,7 +43,7 @@ function Home({username, setUsername, socket}) {
                 <input className='input' placeholder='Username' onChange = {handleUsernameChange} />
                 <input className='input' placeholder='Password' onChange = {handlePasswordChange} value = {password} type = "password"/>
                 <button className='btn btn-secondary' style={{ width: '100%' }} onClick = {handleSignup}>Register</button>
-                <button className='btn btn-secondary' style={{ width: '100%' }} onClick = {joinRoom}>Login</button>
+                <button className='btn btn-secondary' style={{ width: '100%' }} onClick = {handleLogin}>Login</button>
             </div>
         </div>
     )
