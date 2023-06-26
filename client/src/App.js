@@ -7,7 +7,7 @@ import {useState} from 'react'
 import io from 'socket.io-client'
 
 
-const socket = io.connect('http://localhost:4000')
+const socket = io.connect('https://phuc-chatroom-app.onrender.com/')
 
 function App() {
   const [username, setUsername] = useState('')

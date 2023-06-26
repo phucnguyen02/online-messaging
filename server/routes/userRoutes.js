@@ -6,6 +6,7 @@ const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controll
 
 router.post('/register', (req, res) => {
     findUsername(req.body.username).then((user) => {
+        console.log(user);
         if(user){
             res.status(500).json({ message: "Username is already registered." });
             return;
