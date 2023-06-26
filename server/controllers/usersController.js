@@ -27,7 +27,7 @@ async function deleteUser(id){
 
 async function findUsername(name){
     try{
-        const user = await Users.find(
+        const user = await Users.findOne(
             {where: {username: name}}
         )
         return user;
