@@ -8,18 +8,22 @@ router.post('/register', (req, res) => {
     findUsername(req.body.username).then((user) => {
         if(user)
             res.status(500).send({message: 'Username already exists'});
-    }).then((res) => {
-        bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
-            insertUser(req.body.username, hashedPassword).then((result) => {
-                res.status(201).send({message: 'User created successfully', result})
-            }).catch((error) => {
-                res.status(500).send({message: 'Error creating user', error});
-            });
-        }).catch((e) => {
-            res.status(500).send({message: 'Password not hashed successfully', e})
-        })
-    })
+        else{
+            bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
+                insertUser(req.body.username, hashedPassword).then((result) => {
+                    res.status(201).send({message: 'User created successfully', result})
+                }).catch((error) => {
+                    res.status(500).send({message: 'Error creating user', error});
+                });
+            }).catch((e) => {
+                res.status(500).send({message: 'Password not hashed successfully', e})
+            })
+        }
+    }).catch((e) => {
+        res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
+    });
     
+   
 })
 
 router.post('/login', (req, res) => {
