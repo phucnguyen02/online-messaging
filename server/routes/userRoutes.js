@@ -7,8 +7,10 @@ const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controll
 router.post('/register', (req, res) => {
     let usernameExists = false;
     findUsername(req.body.username).then((user) => {
-        if(user)
+        if(user){
+            console.log("User exists");
             usernameExists = true;
+        }
     }).catch((e) => {
         res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
     });

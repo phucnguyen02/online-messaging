@@ -30,7 +30,6 @@ async function findUsername(name){
         const user = await Users.findOne(
             {where: {username: name}}
         )
-        console.log('User from db: ', user);
         return user;
     }
     catch(err){
