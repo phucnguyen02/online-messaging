@@ -25,13 +25,10 @@ function Signup() {
             }
         };
         axios(configuration).then((res) => {
-            console.log(res);
-            if(res.status === 500)
-                alert('Username is already registered!');
-            else
-                setRegister(true);
+            setRegister(true);
         }).catch((err) => {
-            err = new Error();
+            console.log(err);
+            alert('Username is already registered!');
         });
     }
 

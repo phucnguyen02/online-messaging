@@ -6,13 +6,9 @@ const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controll
 
 router.post('/register', (req, res) => {
     findUsername(req.body.username).then((user) => {
-        console.log('User:', user);
-        if(user){
-            console.log("Hi I'm in here");
+        if(user)
             res.status(500).json({message: 'Username already exists'});
-        }
         else{
-            console.log("Hi I'm elsewhere");
             bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
                 insertUser(req.body.username, hashedPassword).then((result) => {
                     res.status(201).json({message: 'User created successfully', result})
