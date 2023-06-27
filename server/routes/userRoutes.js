@@ -5,24 +5,27 @@ const jwt = require('jsonwebtoken');
 const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controllers/usersController')
 
 router.post('/register', (req, res) => {
+    let usernameExists = false;
     findUsername(req.body.username).then((user) => {
-        console.log('User from backend: ', user);
-        if(user){
-            res.status(500).json({ message: "Username is already registered." });
-        }
+        if(user)
+            usernameExists = true;
     }).catch((e) => {
         res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
     });
 
-    bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
-        insertUser(req.body.username, hashedPassword).then((result) => {
-            res.status(201).send({message: 'User created successfully', result})
-        }).catch((error) => {
-            res.status(500).send({message: 'Error creating user', error});
-        });
-    }).catch((e) => {
-        res.status(500).send({message: 'Password not hashed successfully', e})
-    })
+    if(usernameExists)
+        res.status(500).send({message: 'Username already exists'});
+    else{ 
+        bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
+            insertUser(req.body.username, hashedPassword).then((result) => {
+                res.status(201).send({message: 'User created successfully', result})
+            }).catch((error) => {
+                res.status(500).send({message: 'Error creating user', error});
+            });
+        }).catch((e) => {
+            res.status(500).send({message: 'Password not hashed successfully', e})
+        })
+    }
 })
 
 router.post('/login', (req, res) => {
@@ -56,7 +59,6 @@ router.post('/login', (req, res) => {
 
 router.get('/getAllUsers', (req, res) => {
     getAllUsers().then((users) => {
-        console.log(users);
         res.status(201).send(users);
     }).catch((e) => {
         res.status(404).send({message: 'An error occurred while fetching all users', e})
