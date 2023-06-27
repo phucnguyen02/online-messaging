@@ -12,7 +12,7 @@ router.post('/register', (req, res) => {
     }).catch((e) => {
         res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
     });
-
+    console.log(usernameExists);
     if(usernameExists)
         res.status(500).send({message: 'Username already exists'});
     else{ 
