@@ -9,22 +9,22 @@ router.post('/register', (req, res) => {
         console.log('User:', user);
         if(user){
             console.log("Hi I'm in here");
-            res.status(500).send({message: 'Username already exists'});
+            res.status(500).json({message: 'Username already exists'});
         }
         else{
             console.log("Hi I'm elsewhere");
             bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
                 insertUser(req.body.username, hashedPassword).then((result) => {
-                    res.status(201).send({message: 'User created successfully', result})
+                    res.status(201).json({message: 'User created successfully', result})
                 }).catch((error) => {
-                    res.status(500).send({message: 'Error creating user', error});
+                    res.status(500).json({message: 'Error creating user', error});
                 });
             }).catch((e) => {
-                res.status(500).send({message: 'Password not hashed successfully', e})
+                res.status(500).json({message: 'Password not hashed successfully', e})
             })
         }
     }).catch((e) => {
-        res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
+        res.status(500).json({message: 'An error occurred while retrieving the user', e}) 
     });
     
    
