@@ -7,27 +7,18 @@ const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controll
 router.post('/register', (req, res) => {
     let usernameExists = false;
     findUsername(req.body.username).then((user) => {
-        if(user){
-            console.log("User exists");
-            usernameExists = true;
-        }
+        if(user)
+            res.status(500).send({message: 'Username already exists'});
+    })
+    bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
+        insertUser(req.body.username, hashedPassword).then((result) => {
+            res.status(201).send({message: 'User created successfully', result})
+        }).catch((error) => {
+            res.status(500).send({message: 'Error creating user', error});
+        });
     }).catch((e) => {
-        res.status(500).send({message: 'An error occurred while retrieving the user', e}) 
-    });
-    console.log(usernameExists);
-    if(usernameExists)
-        res.status(500).send({message: 'Username already exists'});
-    else{ 
-        bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
-            insertUser(req.body.username, hashedPassword).then((result) => {
-                res.status(201).send({message: 'User created successfully', result})
-            }).catch((error) => {
-                res.status(500).send({message: 'Error creating user', error});
-            });
-        }).catch((e) => {
-            res.status(500).send({message: 'Password not hashed successfully', e})
-        })
-    }
+        res.status(500).send({message: 'Password not hashed successfully', e})
+    })
 })
 
 router.post('/login', (req, res) => {
