@@ -7,7 +7,6 @@ async function insertUser(username, password){
             username: username,
             password: password
         };
-        console.log("User: ", user);
         await Users.create(user);
         return user;
     } catch (err) {

@@ -5,20 +5,21 @@ const jwt = require('jsonwebtoken');
 const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controllers/usersController')
 
 router.post('/register', (req, res) => {
-    let usernameExists = false;
     findUsername(req.body.username).then((user) => {
         if(user)
             res.status(500).send({message: 'Username already exists'});
+    }).then((res) => {
+        bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
+            insertUser(req.body.username, hashedPassword).then((result) => {
+                res.status(201).send({message: 'User created successfully', result})
+            }).catch((error) => {
+                res.status(500).send({message: 'Error creating user', error});
+            });
+        }).catch((e) => {
+            res.status(500).send({message: 'Password not hashed successfully', e})
+        })
     })
-    bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
-        insertUser(req.body.username, hashedPassword).then((result) => {
-            res.status(201).send({message: 'User created successfully', result})
-        }).catch((error) => {
-            res.status(500).send({message: 'Error creating user', error});
-        });
-    }).catch((e) => {
-        res.status(500).send({message: 'Password not hashed successfully', e})
-    })
+    
 })
 
 router.post('/login', (req, res) => {
