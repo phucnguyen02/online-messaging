@@ -48,7 +48,7 @@ router.post('/login', (req, res) => {
                 token
             })
         }).catch((error) => {
-            res.status(400).send({message: 'Passwords do not match', error});
+            res.status(400).send({message: 'An error occurred while validating the password', error});
         })
     }).catch((e) => {
         res.status(404).send({message: 'Username does not exist', e});

@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import axios from 'axios';
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function Home({username, setUsername, socket}) {
     const navigate = useNavigate();
@@ -30,10 +31,13 @@ function Home({username, setUsername, socket}) {
             }
         };
         axios(configuration).then((res) => {
+            cookies.set("TOKEN", result.data.token, {
+                path: "/",
+            });      
             socket.emit('join_room', {username});
             navigate('/chat', {replace: true})
         }).catch((err) => {
-            err = new Error();
+            alert('Invalid credentials!');
         });
     }
 
