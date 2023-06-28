@@ -4,7 +4,7 @@ import Home from './pages/Home'
 import Chat from './pages/Chat'
 import Signup from './pages/Signup'
 import ProtectedRoutes from './components/ProtectedRoutes';
-import {useState} from 'react'
+import {useState, Navigate} from 'react'
 import io from 'socket.io-client'
 
 
@@ -12,6 +12,12 @@ const socket = io.connect('https://phuc-chatroom-app.onrender.com/')
 
 function App() {
   const [username, setUsername] = useState('')
+  const [cookies, setCookies] = useState()
+  const PrivateRoute = ({ Component }) => {
+    const auth = (cookies.token != null)
+    return auth ? <Component /> : <Navigate to="/login" />;
+  };
+
   return (
     <Router>
       <div className='App'>
@@ -23,12 +29,15 @@ function App() {
             <Home username = {username} setUsername = {setUsername} socket = {socket}/>
           }/>
 
-          <Route
-            path = '/chat'
-            element = {<Chat username = {username} socket = {socket}/>}
-          />
 
-          <ProtectedRoutes path = '/signup' element = {<Signup/>}/>
+          <Route path = '/signup' element = {<Signup/>}/>
+
+          <Route element = {<ProtectedRoutes/>}>
+            <Route
+              path = '/chat'
+              element = {<Chat username = {username} socket = {socket}/>}
+            />
+          </Route>
         </Routes>
       </div>
     </Router>

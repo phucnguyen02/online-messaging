@@ -31,7 +31,7 @@ function Home({username, setUsername, socket}) {
             }
         };
         axios(configuration).then((res) => {
-            cookies.set("TOKEN", result.data.token, {
+            cookies.set("TOKEN", res.data.token, {
                 path: "/",
             });      
             socket.emit('join_room', {username});
