@@ -2,7 +2,7 @@ const express = require('express'); // Web framework for Node.js
 const router = express.Router(); // Creates an instance of an Express Router
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {insertUser, deleteUser, findUsername, getAllUsers} = require('../controllers/usersController')
+const {insertUser, findUsername, getAllUsers} = require('../controllers/usersController')
 
 router.post('/register', (req, res) => {
     findUsername(req.body.username).then((user) => {

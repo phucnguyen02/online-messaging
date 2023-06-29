@@ -14,16 +14,6 @@ async function insertUser(username, password){
     }
 }
 
-async function deleteUser(id){
-  try{
-    await Users.destroy(
-      {where: {userID: id}}
-    )
-  }catch(err){
-    console.error(err);
-  }
-}
-
 async function findUsername(name){
     try{
         const user = await Users.findOne(
@@ -48,7 +38,6 @@ async function getAllUsers(){
 
 module.exports = {
     insertUser,
-    deleteUser,
     findUsername,
     getAllUsers
 };
