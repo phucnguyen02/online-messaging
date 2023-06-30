@@ -1,7 +1,7 @@
 const {Messages} = require('../models');
 const e = require("express");
 
-async function insertMessage(content, user){
+async function insertMessage(user, content){
   try {
       const message = {
         sender: user,
