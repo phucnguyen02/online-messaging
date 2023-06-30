@@ -10,7 +10,6 @@ function UsersList({socket, username}) {
             console.log(data);
             setUsers(data);
         })
-        console.log(username);
         return () => socket.off('chatroom_users');
     }, [socket]);
 
