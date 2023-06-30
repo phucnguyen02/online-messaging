@@ -50,7 +50,7 @@ function Messages({socket, username}) {
                     __createdTime__: msg.updatedAt
                 }
             })
-            setMessagesReceived((state) => [...last100Messages, ...state]);
+            setMessagesReceived((state) => [...last100Messages]);
         })
 
         return () => socket.off('last_100_messages');
