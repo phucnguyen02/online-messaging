@@ -10,7 +10,7 @@ function UsersList({socket, username}) {
             console.log(data);
             setUsers(data);
         })
-
+        console.log(username);
         return () => socket.off('chatroom_users');
     }, [socket]);
 
@@ -20,7 +20,6 @@ function UsersList({socket, username}) {
         navigate('/', {replace: true});
     }
 
-    
     return (
         <div className='roomAndUsersColumn'>
             <div>

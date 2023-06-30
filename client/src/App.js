@@ -4,19 +4,13 @@ import Home from './pages/Home'
 import Chat from './pages/Chat'
 import Signup from './pages/Signup'
 import ProtectedRoutes from './components/ProtectedRoutes';
-import {useState, Navigate} from 'react'
 import io from 'socket.io-client'
-
+import { useLocalStorage } from './useLocalStorage';
 
 const socket = io.connect('https://phuc-chatroom-app.onrender.com/')
 
 function App() {
-  const [username, setUsername] = useState('')
-  const [cookies, setCookies] = useState()
-  const PrivateRoute = ({ Component }) => {
-    const auth = (cookies.token != null)
-    return auth ? <Component /> : <Navigate to="/login" />;
-  };
+  const [username, setUsername] = useLocalStorage('username', '');
 
   return (
     <Router>

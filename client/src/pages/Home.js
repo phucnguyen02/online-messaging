@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import axios from 'axios';
@@ -20,6 +20,11 @@ function Home({username, setUsername, socket}) {
     function handleSignup(){
         navigate('/signup', {replace: true})
     }
+
+    useEffect(() => {
+        localStorage.setItem("username", JSON.stringify(username));
+    }, [username])
+
 
     function handleLogin(){
         const configuration = {

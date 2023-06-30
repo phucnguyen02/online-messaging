@@ -13,13 +13,11 @@ function Messages({socket, username}) {
 
     function handleMessageChange({target}){
         setEditMsg(target.value);
-        console.log("Hi", editMsg);
     }
 
     function handleKeyDown(event){
-        if(event.key === 'Enter' && editMsg != ''){
+        if(event.key === 'Enter' && editMsg !== ''){
             setEditing(false);
-            console.log(editMsg);
             socket.emit('edit_message', {editID, editMsg});
             setEditMsg('');
         }
