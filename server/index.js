@@ -80,18 +80,21 @@ io.on('connection', (socket) => {
 
         socket.on('edit_message', (data) => {
             const {editID, editMsg} = data;
-            editMessage(editID, editMsg);
-            getLatest100Messages().then((last100Messages) => {
-                socket.emit('last_100_messages', last100Messages);
+            editMessage(editID, editMsg).then((res) => {
+                getLatest100Messages().then((last100Messages) => {
+                    socket.emit('last_100_messages', last100Messages);
+                });
             });
         })
 
         socket.on('delete_message', (data) => {
             const {id} = data;
-            deleteMessage(id);
-            getLatest100Messages().then((last100Messages) => {
-                socket.emit('last_100_messages', last100Messages);
+            deleteMessage(id).then((res) => {
+                getLatest100Messages().then((last100Messages) => {
+                    socket.emit('last_100_messages', last100Messages);
+                });
             });
+            
         })
 
         socket.on('leave_room', (data) => {
