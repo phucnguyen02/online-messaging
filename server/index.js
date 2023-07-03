@@ -38,7 +38,7 @@ const leaveRoom = require('./utils/leave-room');
 
 const io = new Server(server, {
     cors: {
-        origin: 'https://master--willowy-fenglisu-cbfdb9.netlify.app/',
+        origin: 'https://master--willowy-fenglisu-cbfdb9.netlify.app',
         methods: ['GET', 'POST']
     }
 });
