@@ -5,6 +5,7 @@ import UsersList from '../components/UsersList';
 import '../styles/Chat.css';
 
 function Chat({socket, username}) {
+  console.log(username);
   return (
     <div className='chatContainer'>
 
