@@ -5,13 +5,16 @@ import Chat from './pages/Chat'
 import Signup from './pages/Signup'
 import ProtectedRoutes from './components/ProtectedRoutes';
 import io from 'socket.io-client'
+import { useEffect } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
 const socket = io.connect('https://phuc-chatroom-app.onrender.com/')
 
 function App() {
   const [username, setUsername] = useLocalStorage('username', '');
-
+  useEffect(() => {
+    document.title = 'Online Chatroom';
+  }, [])
   return (
     <Router>
       <div className='App'>
