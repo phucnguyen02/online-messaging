@@ -12,9 +12,6 @@ const socket = io.connect('https://phuc-chatroom-app.onrender.com/')
 
 function App() {
   const [username, setUsername] = useLocalStorage('username', '');
-  useEffect(() => {
-    document.title = 'Online Chatroom';
-  }, [])
   return (
     <Router>
       <div className='App'>
